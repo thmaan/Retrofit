@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:padding="16dp"
+    android:background="#7abecc">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titleMovieLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.174">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="Username"
+            android:background="#ffffff"
+            android:drawableStart="@drawable/ic_adb_white_24dp"
+            android:drawablePadding="4dp"
+            android:ems="10"
+            android:hint="Username..."
+            android:inputType="textPersonName"
+            android:textColor="#000"
+            android:textColorHint="#000000"
+            android:textSize="16sp"
+            android:padding="2dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/textInputLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleMovieLayout"
+        app:layout_constraintVertical_bias="0.076">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="Password..."
+            android:background="#FFFFFF"
+            android:textColor="#000000"
+            android:drawablePadding="4dp"
+            android:drawableStart="@drawable/ic_vpn_key_white_24dp"
+            android:ems="10"
+            android:textSize="16sp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColorHint="#000"
+            android:padding="2dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="252dp"
+        android:background="#1800FF"
+        android:text="Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        app:layout_constraintVertical_bias="0.342" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create User"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/titleMovieLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
