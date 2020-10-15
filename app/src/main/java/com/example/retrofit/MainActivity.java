@@ -139,8 +139,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent1);
         }
        if (item.getItemId() == R.id.logoutMenu){
-            Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
+           Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
            intent1.putExtra(AUTO_LOGIN,false);
+           startActivity(intent1);
+        }
+        if (item.getItemId() == R.id.viewCustomerMenu){
+            Intent intent1 = new Intent(MainActivity.this, CustomerActivity.class);
+
+            intent1.putExtra(AUTH_TOKEN,token);
             startActivity(intent1);
         }
         return true;
