@@ -6,16 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.w3c.dom.Text;
 
 import java.util.Objects;
 
@@ -42,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private String username = "";
     private String password = "";
     private boolean switchOnOff;
-    private boolean autoLogin;
+    private String autoLogin = "yes";
 
     public static final String SHARED_PREFS = "SHAREDpREFS";
     public static final String USER = "User";
@@ -61,20 +55,20 @@ public class LoginActivity extends AppCompatActivity {
         relativeLayout = findViewById(R.id.relativeLayout);
         registerTextView = findViewById(R.id.register);
 
-        autoLogin();
         api();
         loadData();
+        autoLogin();
         updateViews();
 
-        if(autoLogin && !usernameTextView.getText().toString().isEmpty() )
+        if(autoLogin == null && !usernameTextView.getText().toString().isEmpty() )
             login();
+
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMainActivity();
             }
         });
-
         registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,17 +77,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     private void autoLogin(){
-        autoLogin = true;
         try {
             Intent intent = getIntent();
-            autoLogin = Objects.requireNonNull(getIntent().getExtras()).getBoolean(MainActivity.AUTO_LOGIN);
+            autoLogin = intent.getStringExtra(AUTO_LOGIN);
         }catch (NullPointerException e){
             e.getStackTrace();
         }
     }
     private void api(){
-       //Gson gson = new GsonBuilder().serializeNulls().create();
-
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 

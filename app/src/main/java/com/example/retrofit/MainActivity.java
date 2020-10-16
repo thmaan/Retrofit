@@ -9,9 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +22,6 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,24 +50,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         token = intent.getStringExtra(LoginActivity.AUTH_TOKEN);
 
         textViewResult = findViewById(R.id.text_view_result);
-        //createUserButton = findViewById(R.id.create_user_button);
+        api();
 
-       api();
-        /*createUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, CreateUserActivity.class);
-
-                intent1.putExtra(AUTH_TOKEN,token);
-                startActivity(intent1);
-            }
-        });*/
         toolbarCode();
-        //getPosts();
-        //getComments();
-        //createPost();
-        //updatePost();
-        //deletePost();
         hello();
 
     }
@@ -140,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
        if (item.getItemId() == R.id.logoutMenu){
            Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
-           intent1.putExtra(AUTO_LOGIN,false);
+           intent1.putExtra(LoginActivity.AUTO_LOGIN,"false");
            startActivity(intent1);
         }
         if (item.getItemId() == R.id.viewCustomerMenu){
@@ -274,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-    private void deletePost(){
+    /*private void deletePost(){
         Call<Void> call = jsonPlaceHolderApi.deletePost(5);
 
         call.enqueue(new Callback<Void>() {
@@ -288,5 +270,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 textViewResult.setText(t.getMessage());
             }
         });
-    }
+    }*/
 }

@@ -25,6 +25,7 @@
     <item android:title="Products">
         <menu>
             <item
+                android:icon="@drawable/ic_product"
                 android:id="@+id/productListMenu"
                 android:title="Product List" />
         </menu>

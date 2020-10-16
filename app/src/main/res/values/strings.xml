@@ -11,4 +11,9 @@
     <string name="login_failed">"Login failed"</string>
     <string name="open">open</string>
     <string name="closed">closed</string>
+
+    <string-array name="categories">
+        <item>Indoor</item>
+        <item>Out Door</item>
+    </string-array>
 </resources>

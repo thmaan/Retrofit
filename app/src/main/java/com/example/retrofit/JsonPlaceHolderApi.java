@@ -22,6 +22,17 @@ public interface JsonPlaceHolderApi {
     //Call<User> postUser;
 
     //porra de barra do krl
+    @POST("create-product-api/")
+    Call<ResponseBody> createProduct(@Header("Authorization") String tokenHeader, @Body Product product);
+
+    @POST("update-product-api/{id}/")
+    Call<Product> putProduct(@Header("Authorization") String tokenHeader, @Path("id") int id, @Body Product product);
+
+    @DELETE("delete-product-api/{id}/")
+    Call<Void> deleteProduct(@Header("Authorization") String tokenHeader,@Path("id") int id);
+
+    @DELETE("delete-customer-api/{id}/")
+    Call<Void> deleteCustomer(@Path("auto_increment_id") int id);
 
     @POST("api-token-auth/")
     Call<User> login(@Body Login login);
@@ -65,8 +76,7 @@ public interface JsonPlaceHolderApi {
     @PATCH("posts/{id}")
     Call<Post> patchPost(@Path("id") int id, @Body Post post);
 
-    @DELETE("posts/{id}")
-    Call<Void> deletePost(@Path("id") int id);
+
 
 }
 
