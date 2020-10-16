@@ -22,6 +22,14 @@
                 android:title="View Customer List" />
         </menu>
     </item>
+    <item android:title="Products">
+        <menu>
+            <item
+                android:id="@+id/productListMenu"
+                android:title="Product List" />
+        </menu>
+    </item>
+
     <item android:title="Orders">
         <menu>
             <item

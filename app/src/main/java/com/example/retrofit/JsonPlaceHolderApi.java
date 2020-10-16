@@ -28,6 +28,8 @@ public interface JsonPlaceHolderApi {
 
     //@POST("create-user-api/")
     //Call<ResponseBody> createUser(@Header("Authorization") String tokenHeader, @Body Login login);
+    @GET("products-api/")
+    Call<List<Product>> getProducts(@Header("Authorization") String tokenHeader);
 
     @GET("customers-api/")
     Call<List<Customer>> getCustomers(@Header("Authorization") String tokenHeader);

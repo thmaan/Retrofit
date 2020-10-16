@@ -149,6 +149,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent1.putExtra(AUTH_TOKEN,token);
             startActivity(intent1);
         }
+        if (item.getItemId() == R.id.productListMenu){
+            Intent intent1 = new Intent(MainActivity.this, ProductActivity.class);
+
+            intent1.putExtra(AUTH_TOKEN,token);
+            startActivity(intent1);
+        }
         return true;
     }
 
