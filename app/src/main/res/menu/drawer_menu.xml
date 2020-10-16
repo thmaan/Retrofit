@@ -4,7 +4,7 @@
     <item
         android:title="Customers">
         <menu>
-            <item
+          <!--  <item
                 android:id="@+id/addCustomerMenu"
                 android:icon="@drawable/ic_person"
                 android:title="Add Customer" />
@@ -15,7 +15,7 @@
             <item
                 android:id="@+id/deleteCustomerMenu"
                 android:icon="@drawable/ic_person"
-                android:title="Delete Customer" />
+                android:title="Delete Customer" />-->
             <item
                 android:id="@+id/viewCustomerMenu"
                 android:icon="@drawable/ic_person"
@@ -24,6 +24,10 @@
     </item>
     <item android:title="Products">
         <menu>
+            <item
+                android:icon="@drawable/ic_product"
+                android:id="@+id/createProductMenu"
+                android:title="Create Product"/>
             <item
                 android:icon="@drawable/ic_product"
                 android:id="@+id/productListMenu"

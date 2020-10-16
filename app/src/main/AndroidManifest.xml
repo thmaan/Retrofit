@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity android:name=".UpdateProduct"></activity>
+        <activity android:name=".CreateProduct"></activity>
+        <activity android:name=".UpdateProduct" />
         <activity android:name=".ProductActivity" />
         <activity android:name=".CustomerActivity" />
         <activity android:name=".CreateUserActivity" />
