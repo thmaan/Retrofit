@@ -10,7 +10,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +17,6 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -31,15 +28,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String AUTH_TOKEN = "com.example.retrofit.AUTH_TOKEN";
-    public static final String AUTO_LOGIN = "com.example.retrofit.AUTO_LOGIN";
     private TextView textViewResult;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
-    private User user;
     private String token = "";
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private Button createUserButton;
     NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
     }
     public void hello(){
-        Login login = new Login("admin","admin");
-
         Call<Message> call = jsonPlaceHolderApi.hello(token);
 
         call.enqueue(new Callback<Message>() {
@@ -122,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
        if (item.getItemId() == R.id.logoutMenu){
            Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
-           intent1.putExtra(LoginActivity.AUTO_LOGIN,"false");
+           intent1.putExtra("LOGOUT","sim");
            startActivity(intent1);
         }
         if (item.getItemId() == R.id.viewCustomerMenu){

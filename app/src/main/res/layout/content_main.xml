@@ -24,8 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
                 android:padding="8dp"
-                android:textSize="18dp"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:textSize="18sp" />
         </androidx.cardview.widget.CardView>
 
     </androidx.core.widget.NestedScrollView>

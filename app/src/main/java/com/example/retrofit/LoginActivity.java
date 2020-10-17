@@ -11,8 +11,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Objects;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -29,17 +27,16 @@ public class LoginActivity extends AppCompatActivity {
     private TextView registerTextView;
     private RelativeLayout relativeLayout;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
-    private User user;
     private String token = "";
     private Intent intent;
     private Switch switch1;
     private String username = "";
     private String password = "";
     private boolean switchOnOff;
-    private String autoLogin = "yes";
-
+    private String autoLogin = "autoLogin";
+    private String fromCreate ="";
     public static final String SHARED_PREFS = "SHAREDpREFS";
-    public static final String USER = "User";
+    public static final String USERNAME = "User";
     public static final String PASSWORD = "Password";
     public static final String TOKEN = "token";
     public static final String SWITCH1 = "switch";
@@ -54,14 +51,11 @@ public class LoginActivity extends AppCompatActivity {
         switch1 = findViewById(R.id.switch1);
         relativeLayout = findViewById(R.id.relativeLayout);
         registerTextView = findViewById(R.id.register);
-
+        intent = getIntent();
         api();
         loadData();
-        autoLogin();
         updateViews();
-
-        if(autoLogin == null && !usernameTextView.getText().toString().isEmpty() )
-            login();
+        autoLogin();
 
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,12 +70,34 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private void autoLogin(){
-        try {
-            Intent intent = getIntent();
-            autoLogin = intent.getStringExtra(AUTO_LOGIN);
-        }catch (NullPointerException e){
-            e.getStackTrace();
+    private void autoLogin() {
+        String logout = "nao";
+        String create = "nao";
+
+        if (intent.getStringExtra("LOGOUT") == null) {
+
+        } else
+            logout = intent.getStringExtra("LOGOUT");
+
+        if (intent.getStringExtra("FROM_CREATE") == null) {
+
+        } else
+            create = intent.getStringExtra("FROM_CREATE");
+
+        if (autoLogin.equals("sim") && logout.equals("nao") && create.equals("nao")) {
+            login();
+            return;
+        } else if (logout.equals("sim") && create.equals("nao")) {
+            updateViews();
+        } else if (create.equals("sim")) {
+            try {
+                fromCreate = intent.getStringExtra("FROM_CREATE");
+                username = intent.getStringExtra("NEW_USERNAME");
+                password = intent.getStringExtra("NEW_PASSWORD");
+                updateViews();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
     }
     private void api(){
@@ -104,41 +120,42 @@ public class LoginActivity extends AppCompatActivity {
         login();
     }
     private void login() {
-        username = usernameTextView.getText().toString();
-        password = passwordTextView.getText().toString();
-        Login login = new Login(username, password);
-        Call<User> call = jsonPlaceHolderApi.login(login);
+         username = usernameTextView.getText().toString();
+         password = passwordTextView.getText().toString();
+         Login login = new Login(username, password);
+         Call<User> call = jsonPlaceHolderApi.login(login);
 
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Code: " + response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                User responseFromServer = response.body();
-                token = "Token " + responseFromServer.getToken();
-                Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
-                saveData();
-                intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra(AUTH_TOKEN, token);
-                LoginActivity.this.startActivity(intent);
-            }
+         call.enqueue(new Callback<User>() {
+             @Override
+             public void onResponse(Call<User> call, Response<User> response) {
+                 if (!response.isSuccessful()) {
+                     Toast.makeText(LoginActivity.this, "Code: " + response.code(), Toast.LENGTH_SHORT).show();
+                     return;
+                 }
+                 User responseFromServer = response.body();
+                 token = "Token " + responseFromServer.getToken();
+                 Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
+                 saveData();
+                 intent = new Intent(LoginActivity.this, MainActivity.class);
+                 intent.putExtra(AUTH_TOKEN, token);
+                 LoginActivity.this.startActivity(intent);
+             }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+             @Override
+             public void onFailure(Call<User> call, Throwable t) {
+                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+             }
+         });
     }
     public void saveData(){
         if (switch1.isChecked()){
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            editor.putString(USER, usernameTextView.getText().toString());
+            editor.putString(USERNAME, usernameTextView.getText().toString());
             editor.putString(PASSWORD, passwordTextView.getText().toString());
-            editor.putString(TOKEN, token);
+            editor.putString(AUTO_LOGIN, "sim");
+
             editor.putBoolean(SWITCH1,switch1.isChecked());
 
             editor.apply();
@@ -148,22 +165,22 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            editor.putString(USER, "");
+            editor.putString(USERNAME, "");
             editor.putString(PASSWORD, "");
-            editor.putString(TOKEN, " ");
+            editor.putString(TOKEN, "");
+            editor.putString(AUTO_LOGIN, "nao");
             editor.putBoolean(SWITCH1,switch1.isChecked());
 
             editor.apply();
-
         }
-
     }
 
     public void loadData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        username = sharedPreferences.getString(USER," ");
+        username = sharedPreferences.getString(USERNAME," NAO ACHEI USER");
         password = sharedPreferences.getString(PASSWORD," ");
         token = sharedPreferences.getString(TOKEN," ");
+        autoLogin = sharedPreferences.getString(AUTO_LOGIN,"sem auto login");
         switchOnOff = sharedPreferences.getBoolean(SWITCH1,false);
     }
 

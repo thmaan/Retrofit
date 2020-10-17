@@ -9,9 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -27,7 +24,6 @@ public class CreateUserActivity extends AppCompatActivity {
     private TextView usernameTextView;
     private TextView passwordTextView;
     private Button confirmButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +62,9 @@ public class CreateUserActivity extends AppCompatActivity {
     }
     private void callLogin(){
         Intent intent = new Intent(CreateUserActivity.this, LoginActivity.class);
+        intent.putExtra("FROM_CREATE","sim");
+        intent.putExtra("NEW_USERNAME",usernameTextView.getText().toString());
+        intent.putExtra("NEW_PASSWORD",passwordTextView.getText().toString());
         startActivity(intent);
     }
     private void createUser() {
@@ -78,7 +77,9 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(CreateUserActivity.this, "Code: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateUserActivity.this, "Code: " + response.code() +" "+ response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateUserActivity.this, "Something happened, try again.", Toast.LENGTH_SHORT).show();
+                    callLogin();
                     return;
                 }
                 String content = response.message();
