@@ -124,6 +124,12 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
+        if(item.getItemId() == R.id.homeMenu) {
+            Intent intent1 = new Intent(CustomerActivity.this, MainActivity.class);
+
+            intent1.putExtra(AUTH_TOKEN, token);
+            startActivity(intent1);
+        }
         if (item.getItemId() == R.id.createUserMenu){
             Intent intent1 = new Intent(CustomerActivity.this, CreateUserActivity.class);
 

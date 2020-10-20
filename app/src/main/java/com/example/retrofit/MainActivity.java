@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = getIntent();
         token = intent.getStringExtra(LoginActivity.AUTH_TOKEN);
 
+         if (token == null)
+             token = intent.getStringExtra(ProductActivity.AUTH_TOKEN);
+
         total_orders_tv = findViewById(R.id.total_orders_tv);
         orders_delivered_tv = findViewById(R.id.orders_delivered_tv);
         orders_pending_tv = findViewById(R.id.orders_pending_tv);
@@ -127,6 +130,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         drawerLayout.closeDrawer(GravityCompat.START);
+        if(item.getItemId() == R.id.homeMenu){
+            Intent intent1 = new Intent(MainActivity.this, MainActivity.class);
+
+            intent1.putExtra(AUTH_TOKEN,token);
+            startActivity(intent1);
+        }
         if (item.getItemId() == R.id.createUserMenu){
             Intent intent1 = new Intent(MainActivity.this, CreateUserActivity.class);
 

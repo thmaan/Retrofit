@@ -77,6 +77,12 @@ public class ProductActivity extends AppCompatActivity implements NavigationView
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         drawerLayout.closeDrawer(GravityCompat.START);
+        if(item.getItemId() == R.id.homeMenu) {
+            Intent intent1 = new Intent(ProductActivity.this, MainActivity.class);
+
+            intent1.putExtra(AUTH_TOKEN, token);
+            startActivity(intent1);
+        }
         if (item.getItemId() == R.id.createUserMenu){
             Intent intent1 = new Intent(ProductActivity.this, CreateUserActivity.class);
 
