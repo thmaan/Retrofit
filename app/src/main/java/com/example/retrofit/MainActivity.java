@@ -28,7 +28,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String AUTH_TOKEN = "com.example.retrofit.AUTH_TOKEN";
-    private TextView textViewResult;
+    private TextView total_orders_tv;
+    private TextView orders_delivered_tv;
+    private TextView orders_pending_tv;
+    private TextView total_customers_tv;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     private String token = "";
     private Toolbar toolbar;
@@ -43,11 +46,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = getIntent();
         token = intent.getStringExtra(LoginActivity.AUTH_TOKEN);
 
-        textViewResult = findViewById(R.id.text_view_result);
+        total_orders_tv = findViewById(R.id.total_orders_tv);
+        orders_delivered_tv = findViewById(R.id.orders_delivered_tv);
+        orders_pending_tv = findViewById(R.id.orders_pending_tv);
+        total_customers_tv = findViewById(R.id.total_customers_tv);
         api();
 
         toolbarCode();
-        hello();
+        dashboard();
 
     }
     public void api(){
@@ -67,25 +73,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .build();
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
     }
-    public void hello(){
-        Call<Message> call = jsonPlaceHolderApi.hello(token);
+    public void dashboard(){
+        Call<Dashboard> call = jsonPlaceHolderApi.hello(token);
 
-        call.enqueue(new Callback<Message>() {
+        call.enqueue(new Callback<Dashboard>() {
             @Override
-            public void onResponse(Call<Message> call, Response<Message> response) {
+            public void onResponse(Call<Dashboard> call, Response<Dashboard> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(MainActivity.this, "Code: " + response.message(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Message responseMessage = response.body();
+                Dashboard dashboard = response.body();
                 String content = "";
-                content = responseMessage.getMessage();
-                textViewResult.setText(content);
-                Toast.makeText(MainActivity.this, content,Toast.LENGTH_SHORT).show();
+                content = "Total Orders " + "\n"+ dashboard.getTotal_orders();
+                total_orders_tv.setText(content);
+                content = "Orders Delivered" + "\n"+ dashboard.getDelivered() + "\n";
+                orders_delivered_tv.setText(content);
+                content = "Orders Pending" + "\n"+ dashboard.getPending() + "\n";
+                orders_pending_tv.setText(content);
+                content = "Total Customers"+ "\n" +dashboard.getTotal_customers();
+                total_customers_tv.setText(content);
             }
 
             @Override
-            public void onFailure(Call<Message> call, Throwable t) {
+            public void onFailure(Call<Dashboard> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "failed bro", Toast.LENGTH_SHORT).show();
             }
         });

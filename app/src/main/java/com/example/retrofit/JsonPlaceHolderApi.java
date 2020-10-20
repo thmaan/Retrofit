@@ -35,5 +35,5 @@ public interface JsonPlaceHolderApi {
     Call<ResponseBody> createUser(@Body Login login);
 
     @GET("hello/")
-    Call<Message> hello(@Header("Authorization") String tokenHeader);
+    Call<Dashboard> hello(@Header("Authorization") String tokenHeader);
 }
