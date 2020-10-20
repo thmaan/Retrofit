@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbarCode();
         dashboard();
+        total_customers_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(MainActivity.this, CustomerActivity.class);
+
+                intent1.putExtra(AUTH_TOKEN,token);
+                startActivity(intent1);
+            }
+        });
 
     }
     public void api(){
